@@ -26,8 +26,6 @@ package system
 			var motion : Motion = node.motion;
             var shouldDispose:Boolean = false;
 
-			position = node.position;
-			motion = node.motion;
 			position.position.x += motion.velocity.x * time;
 			position.position.y += motion.velocity.y * time;
 			if ( position.position.x < 0 )

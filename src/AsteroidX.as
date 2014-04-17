@@ -20,6 +20,7 @@ package
     import starling.events.Event;
 
     import system.BulletAgeSystem;
+    import system.CollisionSystem;
 
     import system.GameManager;
     import system.GunControlSystem;
@@ -67,7 +68,7 @@ package
             engine.addSystem( new BulletAgeSystem( creator ), SystemPriorities.update );
 //            engine.addSystem( new DeathThroesSystem( creator ), SystemPriorities.update );
             engine.addSystem( new MovementSystem(creator, config ), SystemPriorities.move );
-//            engine.addSystem( new CollisionSystem( creator ), SystemPriorities.resolveCollisions );
+            engine.addSystem( new CollisionSystem( creator ), SystemPriorities.resolveCollisions );
 //            engine.addSystem( new AnimationSystem(), SystemPriorities.animate );
             engine.addSystem( new RenderSystem( this ), SystemPriorities.render );
 //

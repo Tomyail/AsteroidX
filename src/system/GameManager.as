@@ -11,6 +11,9 @@ package system
 
     import flash.geom.Point;
 
+    import nodes.AsteroidCollisionNode;
+    import nodes.BulletCollisionNode;
+
     import nodes.GameNode;
     import nodes.SpaceshipNode;
 
@@ -27,15 +30,15 @@ package system
 
         private var gameNodes : NodeList;
         private var spaceships : NodeList;
-//        private var asteroids : NodeList;
-//        private var bullets : NodeList;
+        private var asteroids : NodeList;
+        private var bullets : NodeList;
 
         override public function addToEngine( engine : Engine ) : void
         {
             gameNodes = engine.getNodeList( GameNode );
             spaceships = engine.getNodeList( SpaceshipNode );
-//            asteroids = engine.getNodeList( AsteroidCollisionNode );
-//            bullets = engine.getNodeList( BulletCollisionNode );
+            asteroids = engine.getNodeList( AsteroidCollisionNode );
+            bullets = engine.getNodeList( BulletCollisionNode );
         }
 
         override public function update( time : Number ) : void
@@ -69,23 +72,23 @@ package system
                     }
                 }
 
-//                if( asteroids.empty && bullets.empty && !spaceships.empty )
-//                {
-//                    // next level
-//                    var spaceship : SpaceshipNode = spaceships.head;
-//                    node.state.level++;
-//                    var asteroidCount : int = 2 + node.state.level;
-//                    for( var i:int = 0; i < asteroidCount; ++i )
-//                    {
-//                        // check not on top of spaceship
-//                        do
-//                        {
-//                            var position : Point = new Point( Math.random() * config.width, Math.random() * config.height );
-//                        }
-//                        while ( Point.distance( position, spaceship.position.position ) <= 80 );
-//                        creator.createAsteroid( 30, position.x, position.y );
-//                    }
-//                }
+                if( asteroids.empty  && !spaceships.empty )
+                {
+                    // next level
+                    var spaceship : SpaceshipNode = spaceships.head;
+                    node.state.level++;
+                    var asteroidCount : int = 2 + node.state.level;
+                    for( var i:int = 0; i < asteroidCount; ++i )
+                    {
+                        // check not on top of spaceship
+                        do
+                        {
+                            var position : Point = new Point( Math.random() * config.width, Math.random() * config.height );
+                        }
+                        while ( Point.distance( position, spaceship.position.position ) <= 80 );
+                        creator.createAsteroid( 30, position.x, position.y );
+                    }
+                }
             }
         }
 
