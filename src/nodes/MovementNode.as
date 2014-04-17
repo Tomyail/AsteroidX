@@ -1,21 +1,21 @@
 /**
  * User: xuexin.li
  * Date: 2014/4/17
- * Time: 10:52
+ * Time: 15:21
  */
 package nodes
 {
     import ash.core.Node;
 
+    import component.Motion;
 
     import component.Position;
-    import component.Spaceship;
 
-    public class SpaceshipNode extends Node
+    public class MovementNode extends Node
     {
         public var position:Position;
-        public var spaceship:Spaceship;
-        public function SpaceshipNode()
+        public var motion:Motion;
+        public function MovementNode()
         {
             super();
         }

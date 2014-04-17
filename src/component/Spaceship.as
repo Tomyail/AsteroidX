@@ -1,13 +1,13 @@
 /**
  * User: xuexin.li
  * Date: 2014/4/17
- * Time: 14:09
+ * Time: 15:15
  */
 package component
 {
-    public class MotionControls
+    public class Spaceship
     {
-        public function MotionControls()
+        public function Spaceship()
         {
         }
     }

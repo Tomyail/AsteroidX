@@ -23,7 +23,8 @@ package
 
     import system.GameManager;
     import system.GunControlSystem;
-    import system.MotionControlSystem;
+    import system.MovementSystem;
+    import system.SpaceshipControlSystem;
     import system.RenderSystem;
     import system.SystemPriorities;
 
@@ -61,11 +62,11 @@ package
             config.height = viewPort.height;
 
             engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
-            engine.addSystem( new MotionControlSystem( touchPool ), SystemPriorities.update );
+            engine.addSystem( new SpaceshipControlSystem( touchPool ), SystemPriorities.update );
             engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
             engine.addSystem( new BulletAgeSystem( creator ), SystemPriorities.update );
 //            engine.addSystem( new DeathThroesSystem( creator ), SystemPriorities.update );
-//            engine.addSystem( new MovementSystem( config ), SystemPriorities.move );
+            engine.addSystem( new MovementSystem(creator, config ), SystemPriorities.move );
 //            engine.addSystem( new CollisionSystem( creator ), SystemPriorities.resolveCollisions );
 //            engine.addSystem( new AnimationSystem(), SystemPriorities.animate );
             engine.addSystem( new RenderSystem( this ), SystemPriorities.render );

@@ -18,6 +18,9 @@
           <sdk name="AIRSDK_Compiler" />
         </dependencies>
         <compiler-options>
+          <map>
+            <entry key="compiler.debug.swf" value="true" />
+          </map>
           <option name="additionalOptions" value="-advanced-telemetry=true" />
         </compiler-options>
         <packaging-air-desktop />

@@ -23,6 +23,7 @@ package
                 starling = new Starling( AsteroidX, stage );
                 starling.antiAliasing = 0;
                 starling.start();
+                starling.showStats = true
             }
         }
     }

@@ -2,19 +2,17 @@ package system
 {
     import ash.tools.ListIteratingSystem;
 
-    import component.MotionControls;
-
     import component.Position;
 
     import input.TouchPoll;
 
     import nodes.SpaceshipNode;
 
-    public class MotionControlSystem extends ListIteratingSystem
+    public class SpaceshipControlSystem extends ListIteratingSystem
 	{
 		private var keyPoll : TouchPoll;
 
-		public function MotionControlSystem( keyPoll : TouchPoll )
+		public function SpaceshipControlSystem( keyPoll : TouchPoll )
 		{
 			super( SpaceshipNode, updateNode );
 			this.keyPoll = keyPoll;
@@ -22,7 +20,7 @@ package system
 
 		private function updateNode( node : SpaceshipNode, time : Number ) : void
 		{
-			var control : MotionControls = node.control;
+//			var control : MotionControls = node.control;
 			var position : Position = node.position;
 //			var motion : Motion = node.motion;
 
