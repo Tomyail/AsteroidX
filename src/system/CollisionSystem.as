@@ -45,6 +45,7 @@ package system
 				{
 					if ( Point.distance( asteroid.position.position, bullet.position.position ) <= asteroid.collision.radius )
 					{
+                        asteroid.life
 						creator.destroyEntity( bullet.entity );
 						if ( asteroid.collision.radius > 10 )
 						{

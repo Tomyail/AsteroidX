@@ -4,12 +4,14 @@ package nodes
 
     import component.Asteroid;
     import component.Collision;
+    import component.Life;
     import component.Position;
 
     public class AsteroidCollisionNode extends Node
 	{
 		public var asteroid : Asteroid;
 		public var position : Position;
-		public var collision : Collision;
+		public var collision : Collision
+        public var life:Life;
 	}
 }

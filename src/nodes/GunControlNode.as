@@ -7,6 +7,8 @@ package nodes
 {
     import ash.core.Node;
 
+    import component.Damage;
+
     import component.Gun;
     import component.Position;
 
@@ -14,6 +16,7 @@ package nodes
     {
         public var gun:Gun;
         public var position:Position;
+        public var damage:Damage
         public function GunControlNode()
         {
             super();
