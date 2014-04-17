@@ -43,8 +43,8 @@ package system
 
         override public function update( time : Number ) : void
         {
-            var node : GameNode;
-            for( node = gameNodes.head; node; node = node.next )
+            var node : GameNode = gameNodes.head;
+            if( node && node.state.playing )
             {
                 if( spaceships.empty )
                 {
@@ -52,23 +52,24 @@ package system
                     {
                         var newSpaceshipPosition : Point = new Point( config.width * 0.5, config.height * 0.5 );
                         var clearToAddSpaceship : Boolean = true;
-//                        for( var asteroid : AsteroidCollisionNode = asteroids.head; asteroid; asteroid = asteroid.next )
-//                        {
-//                            if( Point.distance( asteroid.position.position, newSpaceshipPosition ) <= asteroid.collision.radius + 50 )
-//                            {
-//                                clearToAddSpaceship = false;
-//                                break;
-//                            }
-//                        }
+                        for( var asteroid : AsteroidCollisionNode = asteroids.head; asteroid; asteroid = asteroid.next )
+                        {
+                            if( Point.distance( asteroid.position.position, newSpaceshipPosition ) <= asteroid.collision.radius + 50 )
+                            {
+                                clearToAddSpaceship = false;
+                                break;
+                            }
+                        }
                         if( clearToAddSpaceship )
                         {
                             creator.createSpaceship();
-                            node.state.lives--;
                         }
                     }
                     else
                     {
                         // game over
+                        node.state.playing = false;
+                        creator.createMenu();
                     }
                 }
 

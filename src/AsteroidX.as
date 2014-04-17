@@ -10,6 +10,10 @@ package
 
     import display.BulletView;
 
+    import feathers.controls.Button;
+
+    import feathers.themes.MetalWorksMobileTheme;
+
     import flash.geom.Rectangle;
 
     import input.KeyPoll;
@@ -28,6 +32,7 @@ package
     import system.SpaceshipControlSystem;
     import system.RenderSystem;
     import system.SystemPriorities;
+    import system.WaitForStartSystem;
 
     public class AsteroidX extends Sprite
     {
@@ -46,7 +51,6 @@ package
 
         private function startGame(event:Event):void
         {
-//            addChild(new BulletView())
             prepare();
             start();
         }
@@ -62,6 +66,9 @@ package
             config.width = viewPort.width;
             config.height = viewPort.height;
 
+            new MetalWorksMobileTheme();
+
+
             engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
             engine.addSystem( new SpaceshipControlSystem( touchPool ), SystemPriorities.update );
             engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
@@ -71,8 +78,11 @@ package
             engine.addSystem( new CollisionSystem( creator ), SystemPriorities.resolveCollisions );
 //            engine.addSystem( new AnimationSystem(), SystemPriorities.animate );
             engine.addSystem( new RenderSystem( this ), SystemPriorities.render );
+            engine.addSystem( new WaitForStartSystem( creator), SystemPriorities.preUpdate );
 //
             creator.createGame();
+
+            creator.createMenu();
 
 
         }

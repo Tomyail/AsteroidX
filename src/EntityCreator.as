@@ -15,6 +15,7 @@ package
     import component.Display;
     import component.GameState;
     import component.Gun;
+    import component.Menu;
     import component.Motion;
     import component.Position;
     import component.Spaceship;
@@ -22,6 +23,7 @@ package
     import display.AsteroidView;
 
     import display.BulletView;
+    import display.MenuWinView;
     import display.SpaceshipView;
 
     public class EntityCreator
@@ -47,6 +49,7 @@ package
                     .add(new Position(50, 50, -90))
                     .add(new Gun(0, 0, 0.05, 20, true))
                     .add(new Spaceship())
+                    .add(new Collision(5))
                     .add(new Display(new SpaceshipView()));
             engine.addEntity(e);
             return e;
@@ -83,6 +86,23 @@ package
                     .add(new Display(new AsteroidView(radius)));
             engine.addEntity(asteroid);
             return asteroid;
+        }
+
+        private var waitEntity:Entity;
+        public function createMenu():Entity
+        {
+            if( !waitEntity )
+            {
+                var waitView : MenuWinView = new MenuWinView();
+
+                waitEntity = new Entity( "wait" )
+                        .add( new Menu( waitView ) )
+                        .add( new Display( waitView ) )
+                        .add( new Position( 0, 0, 0 ) );
+            }
+//            WaitForStart( waitEntity.get( WaitForStart ) ).startGame = false;
+            engine.addEntity( waitEntity );
+            return waitEntity;
         }
     }
 }

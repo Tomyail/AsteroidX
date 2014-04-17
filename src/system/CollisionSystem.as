@@ -8,6 +8,7 @@ package system
 
     import nodes.AsteroidCollisionNode;
     import nodes.BulletCollisionNode;
+    import nodes.GameNode;
     import nodes.SpaceshipCollisionNode;
 
     public class CollisionSystem extends System
@@ -17,6 +18,7 @@ package system
 		private var spaceships : NodeList;
 		private var asteroids : NodeList;
 		private var bullets : NodeList;
+        private var game:NodeList
 
 		public function CollisionSystem( creator : EntityCreator )
 		{
@@ -28,6 +30,7 @@ package system
 			spaceships = engine.getNodeList( SpaceshipCollisionNode );
 			asteroids = engine.getNodeList( AsteroidCollisionNode );
 			bullets = engine.getNodeList( BulletCollisionNode );
+            game = engine.getNodeList( GameNode );
 		}
 		
 		override public function update( time : Number ) : void
@@ -54,17 +57,20 @@ package system
 				}
 			}
 
-//			for ( spaceship = spaceships.head; spaceship; spaceship = spaceship.next )
-//			{
-//				for ( asteroid = asteroids.head; asteroid; asteroid = asteroid.next )
-//				{
-//					if ( Point.distance( asteroid.position.position, spaceship.position.position ) <= asteroid.collision.radius + spaceship.collision.radius )
-//					{
+			for ( spaceship = spaceships.head; spaceship; spaceship = spaceship.next )
+			{
+				for ( asteroid = asteroids.head; asteroid; asteroid = asteroid.next )
+				{
+					if ( Point.distance( asteroid.position.position, spaceship.position.position ) <= asteroid.collision.radius + spaceship.collision.radius )
+					{
+                        game.head.state.lives--
+                        creator.destroyEntity(spaceship.entity);
+                        trace("destory")
 //						spaceship.spaceship.fsm.changeState( "destroyed" );
-//						break;
-//					}
-//				}
-//			}
+						break;
+					}
+				}
+			}
 		}
 
 		override public function removeFromEngine( engine : Engine ) : void
