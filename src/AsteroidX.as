@@ -28,6 +28,7 @@ package
 
     import system.GameManager;
     import system.GunControlSystem;
+    import system.LifeRenderSystem;
     import system.MovementSystem;
     import system.SpaceshipControlSystem;
     import system.RenderSystem;
@@ -42,11 +43,11 @@ package
             addEventListener(Event.ADDED_TO_STAGE, startGame)
         }
 
-        private var engine : Engine;
-        private var tickProvider : StarlingFrameTickProvider;
-        private var creator : EntityCreator;
-        private var keyPoll : KeyPoll;
-        private var config : GameConfig;
+        private var engine:Engine;
+        private var tickProvider:StarlingFrameTickProvider;
+        private var creator:EntityCreator;
+        private var keyPoll:KeyPoll;
+        private var config:GameConfig;
         private var touchPool:TouchPoll;
 
         private function startGame(event:Event):void
@@ -55,13 +56,13 @@ package
             start();
         }
 
-        private function prepare() : void
+        private function prepare():void
         {
             engine = new Engine();
-            creator = new EntityCreator( engine );
-            keyPoll = new KeyPoll( Starling.current.nativeStage );
+            creator = new EntityCreator(engine);
+            keyPoll = new KeyPoll(Starling.current.nativeStage);
             touchPool = new TouchPoll(this.stage);
-            var viewPort : Rectangle = Starling.current.viewPort;
+            var viewPort:Rectangle = Starling.current.viewPort;
             config = new GameConfig();
             config.width = viewPort.width;
             config.height = viewPort.height;
@@ -69,16 +70,17 @@ package
             new MetalWorksMobileTheme();
 
 
-            engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
-            engine.addSystem( new SpaceshipControlSystem( touchPool ), SystemPriorities.update );
-            engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
-            engine.addSystem( new BulletAgeSystem( creator ), SystemPriorities.update );
+            engine.addSystem(new GameManager(creator, config), SystemPriorities.preUpdate);
+            engine.addSystem(new SpaceshipControlSystem(touchPool), SystemPriorities.update);
+            engine.addSystem(new GunControlSystem(creator), SystemPriorities.update);
+            engine.addSystem(new BulletAgeSystem(creator), SystemPriorities.update);
 //            engine.addSystem( new DeathThroesSystem( creator ), SystemPriorities.update );
-            engine.addSystem( new MovementSystem(creator, config ), SystemPriorities.move );
-            engine.addSystem( new CollisionSystem( creator ), SystemPriorities.resolveCollisions );
+            engine.addSystem(new MovementSystem(creator, config), SystemPriorities.move);
+            engine.addSystem(new CollisionSystem(creator), SystemPriorities.resolveCollisions);
 //            engine.addSystem( new AnimationSystem(), SystemPriorities.animate );
-            engine.addSystem( new RenderSystem( this ), SystemPriorities.render );
-            engine.addSystem( new WaitForStartSystem( creator), SystemPriorities.preUpdate );
+            engine.addSystem(new RenderSystem(this), SystemPriorities.render);
+            engine.addSystem(new WaitForStartSystem(creator), SystemPriorities.preUpdate);
+            engine.addSystem(new LifeRenderSystem(), SystemPriorities.render);
 //
             creator.createGame();
 
@@ -87,10 +89,10 @@ package
 
         }
 
-        private function start() : void
+        private function start():void
         {
-            tickProvider = new StarlingFrameTickProvider( Starling.current.juggler );
-            tickProvider.add( engine.update );
+            tickProvider = new StarlingFrameTickProvider(Starling.current.juggler);
+            tickProvider.add(engine.update);
             tickProvider.start();
         }
     }

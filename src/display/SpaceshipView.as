@@ -22,8 +22,9 @@ package display
 
 			var bitmapData : BitmapData = new BitmapData( 17, 14, true, 0 );
 			var transform : Matrix = new Matrix();
-			transform.tx = 7;
-			transform.ty = 7;
+            transform.rotate(-90)
+            transform.tx = 7;
+            transform.ty = 7;
 			bitmapData.draw( shape, transform, null, null, null, true );
 			
 			var texture : Texture = Texture.fromBitmapData( bitmapData, false, false, 1 );

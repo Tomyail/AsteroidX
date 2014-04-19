@@ -12,73 +12,77 @@ package system
     import nodes.SpaceshipCollisionNode;
 
     public class CollisionSystem extends System
-	{
-		private var creator : EntityCreator;
-		
-		private var spaceships : NodeList;
-		private var asteroids : NodeList;
-		private var bullets : NodeList;
+    {
+        private var creator:EntityCreator;
+
+        private var spaceships:NodeList;
+        private var asteroids:NodeList;
+        private var bullets:NodeList;
         private var game:NodeList
 
-		public function CollisionSystem( creator : EntityCreator )
-		{
-			this.creator = creator;
-		}
+        public function CollisionSystem(creator:EntityCreator)
+        {
+            this.creator = creator;
+        }
 
-		override public function addToEngine( engine : Engine ) : void
-		{
-			spaceships = engine.getNodeList( SpaceshipCollisionNode );
-			asteroids = engine.getNodeList( AsteroidCollisionNode );
-			bullets = engine.getNodeList( BulletCollisionNode );
-            game = engine.getNodeList( GameNode );
-		}
-		
-		override public function update( time : Number ) : void
-		{
-			var bullet : BulletCollisionNode;
-			var asteroid : AsteroidCollisionNode;
-			var spaceship : SpaceshipCollisionNode;
+        override public function addToEngine(engine:Engine):void
+        {
+            spaceships = engine.getNodeList(SpaceshipCollisionNode);
+            asteroids = engine.getNodeList(AsteroidCollisionNode);
+            bullets = engine.getNodeList(BulletCollisionNode);
+            game = engine.getNodeList(GameNode);
+        }
 
-			for ( bullet = bullets.head; bullet; bullet = bullet.next )
-			{
-				for ( asteroid = asteroids.head; asteroid; asteroid = asteroid.next )
-				{
-					if ( Point.distance( asteroid.position.position, bullet.position.position ) <= asteroid.collision.radius )
-					{
-                        asteroid.life
-						creator.destroyEntity( bullet.entity );
-						if ( asteroid.collision.radius > 10 )
-						{
-							creator.createAsteroid( asteroid.collision.radius - 10, asteroid.position.position.x + Math.random() * 10 - 5, asteroid.position.position.y + Math.random() * 10 - 5 );
-							creator.createAsteroid( asteroid.collision.radius - 10, asteroid.position.position.x + Math.random() * 10 - 5, asteroid.position.position.y + Math.random() * 10 - 5 );
-						}
-						creator.destroyEntity( asteroid.entity );
-						break;
-					}
-				}
-			}
+        override public function update(time:Number):void
+        {
+            var bullet:BulletCollisionNode;
+            var asteroid:AsteroidCollisionNode;
+            var spaceship:SpaceshipCollisionNode;
 
-			for ( spaceship = spaceships.head; spaceship; spaceship = spaceship.next )
-			{
-				for ( asteroid = asteroids.head; asteroid; asteroid = asteroid.next )
-				{
-					if ( Point.distance( asteroid.position.position, spaceship.position.position ) <= asteroid.collision.radius + spaceship.collision.radius )
-					{
+            for (bullet = bullets.head; bullet; bullet = bullet.next)
+            {
+                for (asteroid = asteroids.head; asteroid; asteroid = asteroid.next)
+                {
+                    if (Point.distance(asteroid.position.position, bullet.position.position) <= asteroid.collision.radius)
+                    {
+                        asteroid.life.currentBlood -= bullet.damage.hurt;
+//                        asteroid.life.hurt(bullet.damage.hurt);
+                        if (asteroid.life.currentBlood < 0)
+                        {
+                            creator.destroyEntity(bullet.entity);
+                            if (asteroid.collision.radius > 10)
+                            {
+                                creator.createAsteroid(asteroid.collision.radius - 10, asteroid.position.position.x + Math.random() * 10 - 5, asteroid.position.position.y + Math.random() * 10 - 5);
+                                creator.createAsteroid(asteroid.collision.radius - 10, asteroid.position.position.x + Math.random() * 10 - 5, asteroid.position.position.y + Math.random() * 10 - 5);
+                            }
+                            creator.destroyEntity(asteroid.entity);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            for (spaceship = spaceships.head; spaceship; spaceship = spaceship.next)
+            {
+                for (asteroid = asteroids.head; asteroid; asteroid = asteroid.next)
+                {
+                    if (Point.distance(asteroid.position.position, spaceship.position.position) <= asteroid.collision.radius + spaceship.collision.radius)
+                    {
                         game.head.state.lives--
                         creator.destroyEntity(spaceship.entity);
                         trace("destory")
 //						spaceship.spaceship.fsm.changeState( "destroyed" );
-						break;
-					}
-				}
-			}
-		}
+                        break;
+                    }
+                }
+            }
+        }
 
-		override public function removeFromEngine( engine : Engine ) : void
-		{
-			spaceships = null;
-			asteroids = null;
-			bullets = null;
-		}
-	}
+        override public function removeFromEngine(engine:Engine):void
+        {
+            spaceships = null;
+            asteroids = null;
+            bullets = null;
+        }
+    }
 }
