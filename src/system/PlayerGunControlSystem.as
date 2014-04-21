@@ -3,23 +3,22 @@ package system
     import ash.tools.ListIteratingSystem;
 
     import component.Damage;
-
     import component.Gun;
     import component.Position;
 
-    import nodes.GunControlNode;
+    import nodes.PlayerGunNode;
 
-    public class GunControlSystem extends ListIteratingSystem
+    public class PlayerGunControlSystem extends ListIteratingSystem
 	{
 		private var creator : EntityCreator;
 		
-		public function GunControlSystem(creator : EntityCreator )
+		public function PlayerGunControlSystem(creator : EntityCreator )
 		{
-			super( GunControlNode, updateNode );
+			super( PlayerGunNode, updateNode );
 			this.creator = creator;
 		}
 
-		private function updateNode( node : GunControlNode, time : Number ) : void
+		private function updateNode( node : PlayerGunNode, time : Number ) : void
 		{
 //			var control : GunControls = node.control;
 			var position : Position = node.position;

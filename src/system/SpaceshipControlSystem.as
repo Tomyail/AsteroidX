@@ -1,46 +1,56 @@
 package system
 {
-    import ash.tools.ListIteratingSystem;
+    import ash.core.Engine;
+    import ash.core.NodeList;
+    import ash.core.System;
 
     import component.Position;
 
     import input.TouchPoll;
 
+    import nodes.PlayerGunNode;
     import nodes.SpaceshipNode;
 
-    public class SpaceshipControlSystem extends ListIteratingSystem
+    public class SpaceshipControlSystem extends System
 	{
 		private var keyPoll : TouchPoll;
 
+        private var players:NodeList;
+        private var gunNodes:NodeList
 		public function SpaceshipControlSystem( keyPoll : TouchPoll )
 		{
-			super( SpaceshipNode, updateNode );
 			this.keyPoll = keyPoll;
 		}
 
-		private function updateNode( node : SpaceshipNode, time : Number ) : void
-		{
-//			var control : MotionControls = node.control;
-			var position : Position = node.position;
-//			var motion : Motion = node.motion;
 
-            position.position.x = keyPoll.globalX;
-            position.position.y = keyPoll.globalY
-//			if ( keyPoll.isDown( control.left ) )
-//			{
-//				position.rotation -= control.rotationRate * time;
-//			}
-//
-//			if ( keyPoll.isDown( control.right ) )
-//			{
-//				position.rotation += control.rotationRate * time;
-//			}
-//
-//			if ( keyPoll.isDown( control.accelerate ) )
-//			{
-//				motion.velocity.x += Math.cos( position.rotation ) * control.accelerationRate * time;
-//				motion.velocity.y += Math.sin( position.rotation ) * control.accelerationRate * time;
-//			}
+        override public function addToEngine(engine:Engine):void
+        {
+            players = engine.getNodeList(SpaceshipNode);
+            gunNodes = engine.getNodeList(PlayerGunNode);
+        }
+
+        override public function removeFromEngine(engine:Engine):void
+        {
+            players = null;
+            gunNodes = null;
+        }
+
+        override public function update(time:Number):void
+        {
+            updateNode(players);
+            updateNode(gunNodes);
+        }
+
+
+        private function updateNode( list : NodeList) : void
+		{
+            var node:Object
+            for( node = list.head; node; node = node.next )
+            {
+                var position : Position = node.position;
+                position.position.x = keyPoll.globalX;
+                position.position.y = keyPoll.globalY;
+            }
 		}
 	}
 }

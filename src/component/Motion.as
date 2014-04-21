@@ -14,5 +14,10 @@ package component
 			this.angularVelocity = angularVelocity;
 			this.damping = damping;
 		}
+
+        public function clone():Motion
+        {
+            return new Motion(velocity.x,velocity.y,angularVelocity,damping);
+        }
 	}
 }

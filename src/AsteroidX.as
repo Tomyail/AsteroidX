@@ -25,9 +25,10 @@ package
 
     import system.BulletAgeSystem;
     import system.CollisionSystem;
+    import system.EnemyGunControlSystem;
 
     import system.GameManager;
-    import system.GunControlSystem;
+    import system.PlayerGunControlSystem;
     import system.LifeRenderSystem;
     import system.MovementSystem;
     import system.SpaceshipControlSystem;
@@ -72,7 +73,7 @@ package
 
             engine.addSystem(new GameManager(creator, config), SystemPriorities.preUpdate);
             engine.addSystem(new SpaceshipControlSystem(touchPool), SystemPriorities.update);
-            engine.addSystem(new GunControlSystem(creator), SystemPriorities.update);
+            engine.addSystem(new PlayerGunControlSystem(creator), SystemPriorities.update);
             engine.addSystem(new BulletAgeSystem(creator), SystemPriorities.update);
 //            engine.addSystem( new DeathThroesSystem( creator ), SystemPriorities.update );
             engine.addSystem(new MovementSystem(creator, config), SystemPriorities.move);
@@ -81,6 +82,7 @@ package
             engine.addSystem(new RenderSystem(this), SystemPriorities.render);
             engine.addSystem(new WaitForStartSystem(creator), SystemPriorities.preUpdate);
             engine.addSystem(new LifeRenderSystem(), SystemPriorities.render);
+            engine.addSystem(new EnemyGunControlSystem(creator),SystemPriorities.update);
 //
             creator.createGame();
 

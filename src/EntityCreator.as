@@ -10,6 +10,8 @@ package
 
     import component.Asteroid;
 
+    import component.Asteroid;
+
     import component.Bullet;
     import component.Collision;
     import component.Damage;
@@ -26,6 +28,7 @@ package
     import display.AsteroidView;
 
     import display.BulletView;
+    import display.GunView;
     import display.LifeView;
     import display.MenuWinView;
     import display.SpaceshipView;
@@ -52,24 +55,44 @@ package
             var subEntity:SubEntity = new SubEntity();
             var lifeView:LifeView = new LifeView();
             //ship
-            var pos:Position = new Position(50, 50, 0)
-            var e:Entity = new Entity()
+            var pos:Position = new Position(50, 50, 0);
+            var spaceShip:Spaceship = new Spaceship()
+            createEntity()
                     .add(pos)
-                    .add(new Gun(0, 0, 0.05, 20, true))
-                    .add(new Spaceship())
+                    .add(spaceShip)
                     .add(new Collision(5))
                     .add(new Display(new SpaceshipView()))
-                    .add(new Life(lifeView,300, 1))
-                    .add(new Damage(20))
+                    .add(new Life(lifeView, 300, 1))
                     .add(subEntity);
-            engine.addEntity(e);
 
             //life bar
-            e = new Entity()
-                    .add(new Display(lifeView))
-                    .add(pos)
-            subEntity.add(e);
+            subEntity.add(
+                    createEntity()
+                            .add(new Display(lifeView))
+                            .add(pos)
+            );
+
+            //gun
+            subEntity.add(createGun(pos)
+                    .add(new Damage(20))
+                    .add(spaceShip)
+            );
+        }
+
+        private function createGun(pos:Position):Entity
+        {
+            return createEntity()
+                    .add(new Display(new GunView()))
+                    .add(new Position(pos.position.x, pos.position.y, pos.rotation))
+                    .add(new Gun(0, 0, 0.05, 20, true))
+        }
+
+
+        private function createEntity():Entity
+        {
+            var e:Entity = new Entity();
             engine.addEntity(e);
+            return e;
         }
 
         public function createUserBullet(gun:Gun, parentPosition:Position, damage:Damage):Entity
@@ -92,10 +115,10 @@ package
         public function destroyEntity(entity:Entity):void
         {
             engine.removeEntity(entity);
-            if(entity.has(SubEntity))
+            if (entity.has(SubEntity))
             {
                 var sub:SubEntity = entity.get(SubEntity);
-                while(sub.tail)
+                while (sub.tail)
                 {
                     destroyEntity(sub.pop())
                 }
@@ -107,24 +130,31 @@ package
             var subEntity:SubEntity = new SubEntity();
             var pos:Position = new Position(x, y, 0);
             var lifeView:LifeView = new LifeView();
-            var asteroid:Entity = new Entity()
-                    .add(new Asteroid())
+            var asteroid:Asteroid = new Asteroid();
+            var motion:Motion = new Motion(( Math.random() - 0.5 ) * 4 * ( 50 - radius ), ( Math.random() - 0.5 ) * 4 * ( 50 - radius ), Math.random() * 2 - 1, 0)
+            createEntity()
+                    .add(asteroid)
                     .add(pos)
                     .add(new Collision(radius))
-                    .add(new Motion(( Math.random() - 0.5 ) * 4 * ( 50 - radius ), ( Math.random() - 0.5 ) * 4 * ( 50 - radius ), Math.random() * 2 - 1, 0))
+                    .add(motion)
                     .add(new Display(new AsteroidView(radius)))
-                    .add(new Life(lifeView,100, 1))
-                    .add(new Damage(10))
+                    .add(new Life(lifeView, 100, 1))
                     .add(new Gun(0, 0, 0.05, 20, false))
                     .add(subEntity)
-            engine.addEntity(asteroid);
 
-            asteroid = new Entity()
-                    .add(new Display(lifeView))
-                    .add(pos)
-            subEntity.add(asteroid);
 
-            engine.addEntity(asteroid);
+            subEntity.add(
+                    createEntity()
+                            .add(new Display(lifeView))
+                            .add(pos)
+            );
+
+            subEntity.add(createGun(pos)
+                            .add(new Damage(10))
+                            .add(asteroid)
+                            .add(motion.clone())
+            )
+
         }
 
         private var waitEntity:Entity;
