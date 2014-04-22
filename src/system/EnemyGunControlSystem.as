@@ -15,9 +15,9 @@ package system
 
     public class EnemyGunControlSystem extends System
     {
-        private var creator : EntityCreator;
+        private var creator:EntityCreator;
 
-        public function EnemyGunControlSystem(creator : EntityCreator )
+        public function EnemyGunControlSystem(creator:EntityCreator)
         {
             this.creator = creator;
         }
@@ -42,17 +42,18 @@ package system
         {
             var p:SpaceshipNode = player.head;
             var e:EnemyGunNode;
-            if(p)
+            if (p)
             {
-                for(e = gun.head;e;e = e.next)
+                for (e = gun.head; e; e = e.next)
                 {
-                    e.position.rotation = Math.atan2(p.position.position.y,p.position.position.x)+90;
-//                    e.gun.timeSinceLastShot += time;
-//                    if(e.gun.timeSinceLastShot >= e.gun.minimumShotInterval)
-//                    {
-//                        creator.createUserBullet( e.gun, e.position, e.damage);
-//                        e.gun.timeSinceLastShot = 0;
-//                    }
+//                    trace(Math.atan2(e.position.position.y - p.position.position.y, e.position.position.x - p.position.position.x) * 180 / Math.PI)
+                    e.position.rotation = Math.atan2(p.position.position.y - e.position.position.y, p.position.position.x - e.position.position.x) + 90 * 180 / Math.PI
+                    e.gun.timeSinceLastShot += time;
+                    if(e.gun.timeSinceLastShot >= e.gun.minimumShotInterval)
+                    {
+                        creator.createUserBullet( e.gun, e.position, e.damage);
+                        e.gun.timeSinceLastShot = 0;
+                    }
                 }
             }
         }
