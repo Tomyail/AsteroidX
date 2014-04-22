@@ -1,6 +1,6 @@
 # General
 bin/*
-out/*
+out
 
 # Eclipse
 .settings/*
