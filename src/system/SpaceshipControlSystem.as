@@ -12,15 +12,15 @@ package system
     import nodes.SpaceshipNode;
 
     public class SpaceshipControlSystem extends System
-	{
-		private var keyPoll : TouchPoll;
+    {
+        private var keyPoll : TouchPoll;
 
         private var players:NodeList;
         private var gunNodes:NodeList
-		public function SpaceshipControlSystem( keyPoll : TouchPoll )
-		{
-			this.keyPoll = keyPoll;
-		}
+        public function SpaceshipControlSystem( keyPoll : TouchPoll )
+        {
+            this.keyPoll = keyPoll;
+        }
 
 
         override public function addToEngine(engine:Engine):void
@@ -43,7 +43,7 @@ package system
 
 
         private function updateNode( list : NodeList) : void
-		{
+        {
             var node:Object
             for( node = list.head; node; node = node.next )
             {
@@ -51,6 +51,6 @@ package system
                 position.position.x = keyPoll.globalX;
                 position.position.y = keyPoll.globalY;
             }
-		}
-	}
+        }
+    }
 }

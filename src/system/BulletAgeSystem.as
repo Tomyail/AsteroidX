@@ -3,6 +3,7 @@ package system
     import ash.tools.ListIteratingSystem;
 
     import component.Bullet;
+    import component.PlayerBullet;
 
     import nodes.BulletAgeNode;
 
@@ -18,7 +19,7 @@ package system
 
 		private function updateNode( node : BulletAgeNode, time : Number ) : void
 		{
-			var bullet : Bullet = node.bullet;
+			var bullet : PlayerBullet = node.bullet;
 			bullet.lifeRemaining -= time;
 			if ( bullet.lifeRemaining <= 0 )
 			{

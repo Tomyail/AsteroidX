@@ -29,7 +29,7 @@ package system
 			gun.timeSinceLastShot += time;
 			if ( gun.shooting && gun.timeSinceLastShot >= gun.minimumShotInterval )
 			{
-				creator.createUserBullet( gun, position, damage);
+				creator.createPlayerBullet( gun, position, damage,node.player);
 				gun.timeSinceLastShot = 0;
 			}
 		}

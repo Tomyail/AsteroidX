@@ -8,10 +8,11 @@ package nodes
     import ash.core.Node;
 
     import component.Bullet;
+    import component.PlayerBullet;
 
     public class BulletAgeNode extends Node
     {
-        public var bullet:Bullet;
+        public var bullet:PlayerBullet;
         public function BulletAgeNode()
         {
             super();

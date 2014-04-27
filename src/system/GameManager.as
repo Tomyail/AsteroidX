@@ -12,7 +12,7 @@ package system
     import flash.geom.Point;
 
     import nodes.AsteroidCollisionNode;
-    import nodes.BulletCollisionNode;
+    import nodes.PlayerBulletCollisionNode;
 
     import nodes.GameNode;
     import nodes.SpaceshipNode;
@@ -38,7 +38,7 @@ package system
             gameNodes = engine.getNodeList( GameNode );
             spaceships = engine.getNodeList( SpaceshipNode );
             asteroids = engine.getNodeList( AsteroidCollisionNode );
-            bullets = engine.getNodeList( BulletCollisionNode );
+            bullets = engine.getNodeList( PlayerBulletCollisionNode );
         }
 
         override public function update( time : Number ) : void

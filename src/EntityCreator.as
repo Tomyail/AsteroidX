@@ -7,6 +7,7 @@ package
 {
     import ash.core.Engine;
     import ash.core.Entity;
+    import ash.core.Entity;
 
     import component.Asteroid;
 
@@ -16,11 +17,13 @@ package
     import component.Collision;
     import component.Damage;
     import component.Display;
+    import component.EnemyBullet;
     import component.GameState;
     import component.Gun;
     import component.Life;
     import component.Menu;
     import component.Motion;
+    import component.PlayerBullet;
     import component.Position;
     import component.Spaceship;
     import component.SubEntity;
@@ -55,7 +58,7 @@ package
             var subEntity:SubEntity = new SubEntity();
             var lifeView:LifeView = new LifeView();
             //ship
-            var pos:Position = new Position(50, 50, 0);
+            var pos:Position = new Position(50, 50, -Math.PI / 2);
             var spaceShip:Spaceship = new Spaceship()
             createEntity()
                     .add(pos)
@@ -74,8 +77,8 @@ package
 
             //gun
             subEntity.add(createGun(pos)
-                    .add(new Damage(20))
-                    .add(spaceShip)
+                            .add(new Damage(20))
+                            .add(spaceShip)
             );
         }
 
@@ -95,20 +98,34 @@ package
             return e;
         }
 
-        public function createUserBullet(gun:Gun, parentPosition:Position, damage:Damage):Entity
+        public function createPlayerBullet(gun:Gun, parentPosition:Position, damage:Damage, parent:Object):Entity
         {
-//            var cos : Number = Math.cos( parentPosition.rotation );
-//            var sin : Number = Math.sin( parentPosition.rotation );
+            var bullet:Entity = createBulletMaterial(PlayerBullet,gun,parentPosition,damage,parent);
+            engine.addEntity(bullet);
+            return bullet;
+        }
+
+        public function createEnemyBullet(gun:Gun, parentPosition:Position, damage:Damage, parent:Object):Entity
+        {
+            var bullet:Entity = createBulletMaterial(EnemyBullet,gun,parentPosition,damage,parent);
+            engine.addEntity(bullet);
+            return bullet;
+        }
+
+        public function createBulletMaterial(bulletClz:Class,gun:Gun, parentPosition:Position, damage:Damage, parent:Object):Entity
+        {
+            var cos:Number = Math.cos(parentPosition.rotation);
+            var sin:Number = Math.sin(parentPosition.rotation);
             var bullet:Entity = new Entity()
-                    .add(new Bullet(gun.bulletLifetime))
+                    .add(new bulletClz(gun.bulletLifetime))
                     .add(new Position(parentPosition.position.x, parentPosition.position.y, 0))
 //                                    cos * gun.offsetFromParent.x - sin * gun.offsetFromParent.y + parentPosition.position.x,
 //                                    sin * gun.offsetFromParent.x + cos * gun.offsetFromParent.y + parentPosition.position.y, 0 ) )
                     .add(new Collision(1))
-                    .add(new Motion(0, -500, 0, 0))
+                    .add(new Motion(cos * gun.bulletSpeed, sin * gun.bulletSpeed, 0, 0))
                     .add(new Display(new BulletView()))
-                    .add(damage);
-            engine.addEntity(bullet);
+                    .add(damage)
+                    .add(parent)
             return bullet;
         }
 
@@ -139,7 +156,7 @@ package
                     .add(motion)
                     .add(new Display(new AsteroidView(radius)))
                     .add(new Life(lifeView, 100, 1))
-                    .add(new Gun(0, 0, 0.05, 20, false))
+                    .add(new Gun(0, 0, Math.random() * 5, 20, false))
                     .add(subEntity)
 
 

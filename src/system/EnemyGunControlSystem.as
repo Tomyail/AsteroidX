@@ -46,12 +46,11 @@ package system
             {
                 for (e = gun.head; e; e = e.next)
                 {
-//                    trace(Math.atan2(e.position.position.y - p.position.position.y, e.position.position.x - p.position.position.x) * 180 / Math.PI)
-                    e.position.rotation = Math.atan2(p.position.position.y - e.position.position.y, p.position.position.x - e.position.position.x) + 90 * 180 / Math.PI
+                    e.position.rotation = Math.atan2(p.position.position.y - e.position.position.y, p.position.position.x - e.position.position.x)
                     e.gun.timeSinceLastShot += time;
                     if(e.gun.timeSinceLastShot >= e.gun.minimumShotInterval)
                     {
-                        creator.createUserBullet( e.gun, e.position, e.damage);
+                        creator.createEnemyBullet( e.gun, e.position, e.damage,e.enemy);
                         e.gun.timeSinceLastShot = 0;
                     }
                 }
