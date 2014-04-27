@@ -12,5 +12,6 @@ package nodes
 		public var spaceship : Spaceship;
 		public var position : Position;
 		public var collision : Collision;
+		public var life : Life;
 	}
 }

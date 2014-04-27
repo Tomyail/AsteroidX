@@ -22,13 +22,13 @@ package display
             {
                 var shape:Shape = new Shape();
                 shape.graphics.beginFill(0x00FF00);
-                shape.graphics.drawRect(0, 0, 5, 50)
+                shape.graphics.drawRect(0, 0, 50, 5)
                 shape.graphics.endFill();
 
                 var bitmapData:BitmapData = new BitmapData(shape.width, shape.height, true, 0);
                 var transform:Matrix = new Matrix();
-                transform.tx = shape.width >> 1;
-//                transform.ty = shape.height >> 1;
+//                transform.tx = shape.width >> 1;
+                transform.ty = shape.height >> 1;
                 bitmapData.draw(shape, transform, null, null, null, true);
                 bmpd = bitmapData;
             }
@@ -36,8 +36,8 @@ package display
 
             var texture:Texture = Texture.fromBitmapData(bmpd, false, false, 1);
             super(texture);
-            pivotX = bmpd.width>>1
-//            pivotY = shape.height >> 1;
+//            pivotX = bmpd.width>>1
+            pivotY = bmpd.height >> 1;
         }
     }
 }

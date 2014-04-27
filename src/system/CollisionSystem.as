@@ -7,7 +7,8 @@ package system
     import flash.geom.Point;
 
     import nodes.AsteroidCollisionNode;
-    import nodes.BulletCollisionNode;
+    import nodes.EnemyBulletCollisiobNode;
+    import nodes.PlayerBulletCollisionNode;
     import nodes.GameNode;
     import nodes.SpaceshipCollisionNode;
 
@@ -17,7 +18,8 @@ package system
 
         private var spaceships:NodeList;
         private var asteroids:NodeList;
-        private var bullets:NodeList;
+        private var playerBullets:NodeList;
+        private var enemyBullets:NodeList;
         private var game:NodeList
 
         public function CollisionSystem(creator:EntityCreator)
@@ -29,27 +31,28 @@ package system
         {
             spaceships = engine.getNodeList(SpaceshipCollisionNode);
             asteroids = engine.getNodeList(AsteroidCollisionNode);
-            bullets = engine.getNodeList(BulletCollisionNode);
+            playerBullets = engine.getNodeList(PlayerBulletCollisionNode);
+            enemyBullets = engine.getNodeList(EnemyBulletCollisiobNode);
             game = engine.getNodeList(GameNode);
         }
 
         override public function update(time:Number):void
         {
-            var bullet:BulletCollisionNode;
+            var playerBulletCollisionNode:PlayerBulletCollisionNode;
+            var enemyBulletCollisionNode:EnemyBulletCollisiobNode;
             var asteroid:AsteroidCollisionNode;
             var spaceship:SpaceshipCollisionNode;
 
-            for (bullet = bullets.head; bullet; bullet = bullet.next)
+            for (playerBulletCollisionNode = playerBullets.head; playerBulletCollisionNode; playerBulletCollisionNode = playerBulletCollisionNode.next)
             {
                 for (asteroid = asteroids.head; asteroid; asteroid = asteroid.next)
                 {
-                    if (Point.distance(asteroid.position.position, bullet.position.position) <= asteroid.collision.radius)
+                    if (Point.distance(asteroid.position.position, playerBulletCollisionNode.position.position) <= asteroid.collision.radius)
                     {
-                        asteroid.life.currentBlood -= bullet.damage.hurt;
-//                        asteroid.life.hurt(bullet.damage.hurt);
+                        creator.destroyEntity(playerBulletCollisionNode.entity);
+                        asteroid.life.currentBlood -= playerBulletCollisionNode.damage.hurt;
                         if (asteroid.life.currentBlood < 0)
                         {
-                            creator.destroyEntity(bullet.entity);
                             if (asteroid.collision.radius > 10)
                             {
                                 creator.createAsteroid(asteroid.collision.radius - 10, asteroid.position.position.x + Math.random() * 10 - 5, asteroid.position.position.y + Math.random() * 10 - 5);
@@ -62,6 +65,7 @@ package system
                 }
             }
 
+
             for (spaceship = spaceships.head; spaceship; spaceship = spaceship.next)
             {
                 for (asteroid = asteroids.head; asteroid; asteroid = asteroid.next)
@@ -71,7 +75,23 @@ package system
                         game.head.state.lives--
                         creator.destroyEntity(spaceship.entity);
                         trace("destory")
-//						spaceship.spaceship.fsm.changeState( "destroyed" );
+                        break;
+                    }
+                }
+
+                for (enemyBulletCollisionNode = enemyBullets.head; enemyBulletCollisionNode; enemyBulletCollisionNode = enemyBulletCollisionNode.next)
+                {
+                    if (Point.distance(spaceship.position.position, enemyBulletCollisionNode.position.position) <= spaceship.collision.radius)
+                    {
+                        spaceship.life.currentBlood -= enemyBulletCollisionNode.damage.hurt;
+                        creator.destroyEntity(enemyBulletCollisionNode.entity);
+                        if (spaceship.life.currentBlood < 0)
+                        {
+                            game.head.state.lives--
+                            creator.destroyEntity(spaceship.entity);
+                            trace("destory")
+                            break;
+                        }
                         break;
                     }
                 }
@@ -82,7 +102,7 @@ package system
         {
             spaceships = null;
             asteroids = null;
-            bullets = null;
+            playerBullets = null;
         }
     }
 }

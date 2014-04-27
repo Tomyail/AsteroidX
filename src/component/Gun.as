@@ -9,6 +9,7 @@ package component
 		public var timeSinceLastShot : Number = 0;
 		public var minimumShotInterval : Number = 0;
 		public var bulletLifetime : Number = 0;
+        public var bulletSpeed:Number = 100;
 		
 		public function Gun( offsetX : Number, offsetY : Number, minimumShotInterval : Number, bulletLifetime : Number,shooting:Boolean = false )
 		{

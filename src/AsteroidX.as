@@ -75,7 +75,6 @@ package
             engine.addSystem(new SpaceshipControlSystem(touchPool), SystemPriorities.update);
             engine.addSystem(new PlayerGunControlSystem(creator), SystemPriorities.update);
             engine.addSystem(new BulletAgeSystem(creator), SystemPriorities.update);
-//            engine.addSystem( new DeathThroesSystem( creator ), SystemPriorities.update );
             engine.addSystem(new MovementSystem(creator, config), SystemPriorities.move);
             engine.addSystem(new CollisionSystem(creator), SystemPriorities.resolveCollisions);
 //            engine.addSystem( new AnimationSystem(), SystemPriorities.animate );
