@@ -81,7 +81,7 @@ package
             engine.addSystem(new RenderSystem(this), SystemPriorities.render);
             engine.addSystem(new WaitForStartSystem(creator), SystemPriorities.preUpdate);
             engine.addSystem(new LifeRenderSystem(), SystemPriorities.render);
-            engine.addSystem(new EnemyGunControlSystem(creator),SystemPriorities.update);
+//            engine.addSystem(new EnemyGunControlSystem(creator),SystemPriorities.update);
 //
             creator.createGame();
 
