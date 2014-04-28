@@ -7,6 +7,7 @@ package
 {
     import ash.core.Engine;
     import ash.integration.starling.StarlingFrameTickProvider;
+    import ash.io.enginecodecs.JsonEngineCodec;
 
     import display.BulletView;
 
@@ -15,6 +16,7 @@ package
     import feathers.themes.MetalWorksMobileTheme;
 
     import flash.geom.Rectangle;
+    import flash.utils.setTimeout;
 
     import input.KeyPoll;
     import input.TouchPoll;
@@ -87,7 +89,19 @@ package
 
             creator.createMenu();
 
+            //test save data
+            setTimeout(saveData,5000)
+        }
 
+        private function saveData():void
+        {
+            var codec : JsonEngineCodec = new JsonEngineCodec();
+            var serialized : String = codec.encodeEngine( engine ) as String;
+            var obj:Object = JSON.parse(serialized);
+            trace(obj);
+//            stream.open( file, FileMode.WRITE );
+//            stream.writeUTF( serialized );
+//            stream.close();
         }
 
         private function start():void
