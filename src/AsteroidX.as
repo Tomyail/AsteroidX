@@ -62,7 +62,7 @@ package
             engine = new Engine();
             creator = new EntityCreator(engine);
             keyPoll = new KeyPoll(Starling.current.nativeStage);
-            touchPool = new TouchPoll(this.stage);
+            touchPool = new TouchPoll(Starling.current.nativeStage);
             var viewPort:Rectangle = Starling.current.viewPort;
             config = new GameConfig();
             config.width = viewPort.width;
@@ -81,7 +81,7 @@ package
             engine.addSystem(new RenderSystem(this), SystemPriorities.render);
             engine.addSystem(new WaitForStartSystem(creator), SystemPriorities.preUpdate);
             engine.addSystem(new LifeRenderSystem(), SystemPriorities.render);
-//            engine.addSystem(new EnemyGunControlSystem(creator),SystemPriorities.update);
+            engine.addSystem(new EnemyGunControlSystem(creator),SystemPriorities.update);
 //
             creator.createGame();
 

@@ -5,31 +5,25 @@
  */
 package input
 {
-    import starling.display.Stage;
-    import starling.events.Touch;
-    import starling.events.TouchEvent;
+    import flash.display.Stage;
 
     public class TouchPoll
     {
         private var stage:Stage;
+
         public function TouchPoll(stage:Stage)
         {
             this.stage = stage;
-            stage.addEventListener(TouchEvent.TOUCH,touchHandler)
         }
 
-        public var globalX:Number;
-        public var globalY:Number;
-        public var lastTouch:Touch;
-        private function touchHandler(event:TouchEvent):void
+        public function get globalX():Number
         {
-            var touch:Touch = event.getTouch(stage);
-            if(touch)
-            {
-                lastTouch = touch;
-                globalX = touch.globalX;
-                globalY = touch.globalY;
-            }
+            return stage.mouseX;
+        }
+
+        public function get globalY():Number
+        {
+            return stage.mouseY;
         }
     }
 }
