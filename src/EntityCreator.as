@@ -87,7 +87,7 @@ package
             return createEntity()
                     .add(new Display(new GunView()))
                     .add(new Position(pos.position.x, pos.position.y, pos.rotation))
-                    .add(new Gun(0, 0, 0.05, 20, true))
+                    .add(new Gun(0, 0, 0.05, 20))
         }
 
 
@@ -156,7 +156,7 @@ package
                     .add(motion)
                     .add(new Display(new AsteroidView(radius)))
                     .add(new Life(lifeView, 100, 1))
-                    .add(new Gun(0, 0, Math.random() * 5, 20, false))
+                    .add(new Gun(0, 0, Math.random() * 5, 20))
                     .add(subEntity)
 
 

@@ -16,6 +16,7 @@ package
     import feathers.themes.MetalWorksMobileTheme;
 
     import flash.geom.Rectangle;
+    import flash.utils.ByteArray;
     import flash.utils.setTimeout;
 
     import input.KeyPoll;
@@ -53,6 +54,8 @@ package
         private var config:GameConfig;
         private var touchPool:TouchPoll;
 
+        [Embed(source="Data",mimeType="application/octet-stream")]
+        private static const Data:Class;
         private function startGame(event:Event):void
         {
             prepare();
@@ -85,12 +88,20 @@ package
             engine.addSystem(new LifeRenderSystem(), SystemPriorities.render);
             engine.addSystem(new EnemyGunControlSystem(creator),SystemPriorities.update);
 //
+
+//            loadData();
             creator.createGame();
 
             creator.createMenu();
 
             //test save data
-            setTimeout(saveData,5000)
+//            setTimeout(saveData,5000)
+        }
+
+        private function loadData():void
+        {
+            var codec : JsonEngineCodec = new JsonEngineCodec();
+            codec.decodeEngine( Object((new Data as ByteArray).toString()),engine)
         }
 
         private function saveData():void

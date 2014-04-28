@@ -27,7 +27,7 @@ package system
 
 //			gun.shooting = keyPoll.isDown( control.trigger );
 			gun.timeSinceLastShot += time;
-			if ( gun.shooting && gun.timeSinceLastShot >= gun.minimumShotInterval )
+			if ( gun.timeSinceLastShot >= gun.minimumShotInterval )
 			{
 				creator.createPlayerBullet( gun, position, damage,node.player);
 				gun.timeSinceLastShot = 0;
