@@ -5,7 +5,7 @@ package component
 	public class Position
 	{
 		public var position : Point;
-		public var rotation : Number = 0;
+		public var rotation : Number;
 		
 		public function Position( x : Number, y : Number, rotation : Number )
 		{

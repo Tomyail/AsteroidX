@@ -4,7 +4,7 @@ package component
 	
 	public class Display
 	{
-		public var displayObject : DisplayObject = null;
+		public var displayObject : DisplayObject;
 		
 		public function Display( displayObject : DisplayObject )
 		{

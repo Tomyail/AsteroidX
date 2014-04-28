@@ -97,8 +97,9 @@ package
         {
             var codec : JsonEngineCodec = new JsonEngineCodec();
             var serialized : String = codec.encodeEngine( engine ) as String;
-            var obj:Object = JSON.parse(serialized);
-            trace(obj);
+            trace(serialized)
+//            var obj:Object = JSON.parse(serialized);
+//            trace(obj);
 //            stream.open( file, FileMode.WRITE );
 //            stream.writeUTF( serialized );
 //            stream.close();

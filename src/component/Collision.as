@@ -2,7 +2,7 @@ package component
 {
 	public class Collision
 	{
-		public var radius : Number = 0;
+		public var radius : Number;
 
 		public function Collision( radius : Number )
 		{

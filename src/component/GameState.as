@@ -7,9 +7,9 @@ package component
 {
     public class GameState
     {
-        public var lives:int = 0;
-        public var level:int = 0;
-        public var points:int = 0;
+        public var lives:int;
+        public var level:int;
+        public var points:int;
         public var playing:Boolean = false;
 
         public function GameState()
